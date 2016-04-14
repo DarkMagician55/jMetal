@@ -29,7 +29,7 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
 
     /** Constructor */
     public WindFLO() {
-        this(500) ;
+        this(1000) ;
     }
 
     /** Constructor */

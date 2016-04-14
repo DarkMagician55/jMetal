@@ -22,7 +22,7 @@ import java.util.List;
  * Created by guotong on 4/5/16.
  *
  */
-public class WindFLORunner {
+public class WindFLODERunner {
     private static final int DEFAULT_NUMBER_OF_CORES = 1 ;
 
     /**
@@ -60,7 +60,7 @@ public class WindFLORunner {
                 .setCrossover(crossover)
                 .setSelection(selection)
                 .setSolutionListEvaluator(evaluator)
-                .setMaxEvaluations(250)
+                .setMaxEvaluations(2500)
                 .setPopulationSize(100)
                 .build() ;
 
