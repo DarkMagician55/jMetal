@@ -64,6 +64,8 @@ public class WindFLODERunner {
 
         crossover = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin") ;
         selection = new DifferentialEvolutionSelection();
+        int maxeval = 250;
+        int popusize = 100;
 
         algorithm = new DifferentialEvolutionBuilder(problem)
                 .setCrossover(crossover)
@@ -83,8 +85,8 @@ public class WindFLODERunner {
         population.add(solution) ;
         new SolutionListOutput(population)
                 .setSeparator("\t")
-                .setVarFileOutputContext(new DefaultFileOutputContext("DE_VAR_"+args[1]+"_"+args[2]+".tsv"))
-                .setFunFileOutputContext(new DefaultFileOutputContext("DE_FUN_"+args[1]+"_"+args[2]+".tsv"))
+                .setVarFileOutputContext(new DefaultFileOutputContext("DE_VAR_"+args[1]+"_"+args[2]+"_MaxEval:"+maxeval+"_polusize:"+popusize+".tsv"))
+                .setFunFileOutputContext(new DefaultFileOutputContext("DE_FUN_"+args[1]+"_"+args[2]+"_MaxEval:"+maxeval+"_polusize:"+popusize+".tsv"))
                 .print();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
