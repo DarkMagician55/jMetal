@@ -4,7 +4,8 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.differentialevolution.DifferentialEvolutionBuilder;
 import org.uma.jmetal.operator.impl.crossover.DifferentialEvolutionCrossover;
 import org.uma.jmetal.operator.impl.selection.DifferentialEvolutionSelection;
-import org.uma.jmetal.problem.WindFLODoubleProblem;
+import org.uma.jmetal.problem.singleobjective.WindFLO;
+import org.uma.jmetal.problem.singleobjective.WindScenario;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -26,11 +27,17 @@ public class WindFLODERunner {
     private static final int DEFAULT_NUMBER_OF_CORES = 1 ;
 
     /**
-     *  Usage: java org.uma.jmetal.runner.singleobjective.DifferentialEvolutionRunner [cores]
+     *  Usage: java org.uma.jmetal.runner.singleobjective.DifferentialEvolutionRunner [cores][WindScenario_name][output_num]
      */
     public static void main(String[] args) throws Exception {
 
-        WindFLODoubleProblem problem;
+        //example
+//        args=new String[3];
+//        args[0]="1";
+//        args[1]="00" || obs_00
+//        args[2]="00" 0[0-9]
+
+        WindFLO problem;
         Algorithm<DoubleSolution> algorithm;
         DifferentialEvolutionSelection selection;
         DifferentialEvolutionCrossover crossover;
@@ -38,7 +45,9 @@ public class WindFLODERunner {
 
         String problemName = "org.uma.jmetal.problem.singleobjective.WindFLO" ;
 
-        problem = (WindFLODoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+        problem = (WindFLO) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+        WindScenario ws = new WindScenario("/home/guotong/code/WindFLO/Scenarios/"+args[1]+".xml");
+        problem.initialize(ws);
 
         int numberOfCores ;
         if (args.length == 1) {
@@ -60,8 +69,8 @@ public class WindFLODERunner {
                 .setCrossover(crossover)
                 .setSelection(selection)
                 .setSolutionListEvaluator(evaluator)
-                .setMaxEvaluations(2500)
-                .setPopulationSize(100)
+                .setMaxEvaluations(250)
+                .setPopulationSize(10)
                 .build() ;
 
         AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -74,8 +83,8 @@ public class WindFLODERunner {
         population.add(solution) ;
         new SolutionListOutput(population)
                 .setSeparator("\t")
-                .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-                .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+                .setVarFileOutputContext(new DefaultFileOutputContext("DE_VAR_"+args[1]+"_"+args[2]+".tsv"))
+                .setFunFileOutputContext(new DefaultFileOutputContext("DE_FUN_"+args[1]+"_"+args[2]+".tsv"))
                 .print();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

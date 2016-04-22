@@ -3,6 +3,8 @@ package org.uma.jmetal.runner.singleobjective;
 import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.particleswarmoptimization.StandardPSO2011;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.singleobjective.WindFLO;
+import org.uma.jmetal.problem.singleobjective.WindScenario;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -25,13 +27,15 @@ public class WindFLOPSORunner {
 
     public static void main(String[] args) throws Exception {
 
-        DoubleProblem problem;
+        WindFLO problem;
         Algorithm<DoubleSolution> algorithm;
         SolutionListEvaluator<DoubleSolution> evaluator ;
 
         String problemName = "org.uma.jmetal.problem.singleobjective.WindFLO" ;
 
-        problem = (DoubleProblem) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+        problem = (WindFLO) ProblemUtils.<DoubleSolution> loadProblem(problemName);
+        WindScenario ws = new WindScenario("/home/guotong/code/WindFLO/Scenarios/"+args[1]+".xml");
+        problem.initialize(ws);
 
         int numberOfCores ;
         if (args.length == 1) {
@@ -60,8 +64,8 @@ public class WindFLOPSORunner {
         population.add(solution) ;
         new SolutionListOutput(population)
                 .setSeparator("\t")
-                .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-                .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+                .setVarFileOutputContext(new DefaultFileOutputContext("PSO_VAR_"+args[1]+"_"+args[2]+".tsv"))
+                .setFunFileOutputContext(new DefaultFileOutputContext("PSO_FUN_"+args[1]+"_"+args[2]+".tsv"))
                 .print();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

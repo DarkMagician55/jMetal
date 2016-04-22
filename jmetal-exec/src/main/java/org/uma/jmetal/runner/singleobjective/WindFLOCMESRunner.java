@@ -4,6 +4,7 @@ import org.uma.jmetal.algorithm.Algorithm;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.CovarianceMatrixAdaptationEvolutionStrategy;
 import org.uma.jmetal.problem.WindFLODoubleProblem;
 import org.uma.jmetal.problem.singleobjective.WindFLO;
+import org.uma.jmetal.problem.singleobjective.WindScenario;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.AlgorithmRunner;
 import org.uma.jmetal.util.JMetalLogger;
@@ -20,8 +21,10 @@ public class WindFLOCMESRunner {
     public static void main(String[] args) throws Exception {
 
         Algorithm<DoubleSolution> algorithm;
-        WindFLODoubleProblem problem = new WindFLO() {
+        WindFLO problem = new WindFLO() {
         } ;
+        WindScenario ws = new WindScenario("/home/guotong/code/WindFLO/Scenarios/"+args[1]+".xml");
+        problem.initialize(ws);
 
         algorithm = new CovarianceMatrixAdaptationEvolutionStrategy.Builder(problem)
                 .build() ;
@@ -38,8 +41,8 @@ public class WindFLOCMESRunner {
 
         new SolutionListOutput(population)
                 .setSeparator("\t")
-                .setVarFileOutputContext(new DefaultFileOutputContext("VAR.tsv"))
-                .setFunFileOutputContext(new DefaultFileOutputContext("FUN.tsv"))
+                .setVarFileOutputContext(new DefaultFileOutputContext("CMES_VAR_"+args[1]+"_"+args[2]+".tsv"))
+                .setFunFileOutputContext(new DefaultFileOutputContext("CMES_FUN_"+args[1]+"_"+args[2]+".tsv"))
                 .print();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
