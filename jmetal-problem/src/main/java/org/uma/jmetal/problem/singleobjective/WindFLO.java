@@ -38,12 +38,12 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
         setNumberOfObjectives(1);
         setName("WindFLO");
 
-//        try {
-//            WindScenario ws = new WindScenario("/home/guotong/code/WindFLO/Scenarios/00.xml");
-//            this.initialize(ws);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            WindScenario ws = new WindScenario("/home/guotong/code/WindFLO/Scenarios/00.xml");
+            this.initialize(ws);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         List<Double> lowerLimit = new ArrayList<>(getNumberOfVariables()) ;
         List<Double> upperLimit = new ArrayList<>(getNumberOfVariables()) ;
