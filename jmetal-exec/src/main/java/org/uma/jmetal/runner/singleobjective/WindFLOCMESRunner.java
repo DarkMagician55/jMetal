@@ -41,8 +41,8 @@ public class WindFLOCMESRunner {
 
         new SolutionListOutput(population)
                 .setSeparator("\t")
-                .setVarFileOutputContext(new DefaultFileOutputContext("CMES_VAR_"+args[1]+"_"+args[2]+".tsv"))
-                .setFunFileOutputContext(new DefaultFileOutputContext("CMES_FUN_"+args[1]+"_"+args[2]+".tsv"))
+                .setVarFileOutputContext(new DefaultFileOutputContext("./result/CMES_VAR_"+args[1]+"_"+args[2]+".tsv"))
+                .setFunFileOutputContext(new DefaultFileOutputContext("./result/CMES_FUN_"+args[1]+"_"+args[2]+".tsv"))
                 .print();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

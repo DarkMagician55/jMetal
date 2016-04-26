@@ -64,8 +64,8 @@ public class WindFLOPSORunner {
         population.add(solution) ;
         new SolutionListOutput(population)
                 .setSeparator("\t")
-                .setVarFileOutputContext(new DefaultFileOutputContext("PSO_VAR_"+args[1]+"_"+args[2]+".tsv"))
-                .setFunFileOutputContext(new DefaultFileOutputContext("PSO_FUN_"+args[1]+"_"+args[2]+".tsv"))
+                .setVarFileOutputContext(new DefaultFileOutputContext("./result/PSO_VAR_"+args[1]+"_"+args[2]+".tsv"))
+                .setFunFileOutputContext(new DefaultFileOutputContext("./result/PSO_FUN_"+args[1]+"_"+args[2]+".tsv"))
                 .print();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");

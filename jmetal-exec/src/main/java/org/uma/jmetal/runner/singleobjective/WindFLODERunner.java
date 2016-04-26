@@ -64,15 +64,15 @@ public class WindFLODERunner {
 
         crossover = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin") ;
         selection = new DifferentialEvolutionSelection();
-        int maxeval = 250;
-        int popusize = 100;
+        int maxeval = 1;
+        int popusize = 1;
 
         algorithm = new DifferentialEvolutionBuilder(problem)
                 .setCrossover(crossover)
                 .setSelection(selection)
                 .setSolutionListEvaluator(evaluator)
-                .setMaxEvaluations(250)
-                .setPopulationSize(10)
+                .setMaxEvaluations(maxeval)
+                .setPopulationSize(popusize)
                 .build() ;
 
         AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
@@ -85,13 +85,13 @@ public class WindFLODERunner {
         population.add(solution) ;
         new SolutionListOutput(population)
                 .setSeparator("\t")
-                .setVarFileOutputContext(new DefaultFileOutputContext("DE_VAR_"+args[1]+"_"+args[2]+"_MaxEval:"+maxeval+"_polusize:"+popusize+".tsv"))
-                .setFunFileOutputContext(new DefaultFileOutputContext("DE_FUN_"+args[1]+"_"+args[2]+"_MaxEval:"+maxeval+"_polusize:"+popusize+".tsv"))
+                .setVarFileOutputContext(new DefaultFileOutputContext("./result/DE_VAR_"+args[1]+"_"+args[2]+"_MaxEval:"+maxeval+"_polusize:"+popusize+".tsv"))
+                .setFunFileOutputContext(new DefaultFileOutputContext("./result/DE_FUN_"+args[1]+"_"+args[2]+"_MaxEval:"+maxeval+"_polusize:"+popusize+".tsv"))
                 .print();
 
         JMetalLogger.logger.info("Total execution time: " + computingTime + "ms");
-        JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
-        JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
+//        JMetalLogger.logger.info("Objectives values have been written to file FUN.tsv");
+//        JMetalLogger.logger.info("Variables values have been written to file VAR.tsv");
 
         evaluator.shutdown();
     }
