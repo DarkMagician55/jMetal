@@ -136,6 +136,7 @@ public class DifferentialEvolution extends AbstractDifferentialEvolution<DoubleS
     }
 
     Collections.sort(pop, comparator) ;
+    System.out.println(pop.get(0).getObjective(0));
     return pop;
   }
 

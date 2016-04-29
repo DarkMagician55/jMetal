@@ -36,6 +36,7 @@ public class WindFLODERunner {
 //        args[0]="1";
 //        args[1]="00" || obs_00
 //        args[2]="00" 0[0-9]
+//        args[3]="00" maxeval
 
         WindFLO problem;
         Algorithm<DoubleSolution> algorithm;
@@ -64,8 +65,8 @@ public class WindFLODERunner {
 
         crossover = new DifferentialEvolutionCrossover(0.5, 0.5, "rand/1/bin") ;
         selection = new DifferentialEvolutionSelection();
-        int maxeval = 1;
-        int popusize = 1;
+        int maxeval = Integer.parseInt(args[3]);
+        int popusize = 10;
 
         algorithm = new DifferentialEvolutionBuilder(problem)
                 .setCrossover(crossover)

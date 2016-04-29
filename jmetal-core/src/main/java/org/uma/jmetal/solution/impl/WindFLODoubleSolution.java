@@ -74,7 +74,7 @@ public class WindFLODoubleSolution
     private void initializeDoubleVariables() {
 
         ArrayList<double[]> grid = new ArrayList<double[]>();
-        double interval = 8.001 * problem.getTurbineRadius();
+        double interval = 10 * problem.getTurbineRadius();
 
         //建立网格，八倍最小半径，这grid到底有什么用，可以获取最多的发电机个数
         for (double x=0.0; x<problem.getFarmWidth(); x+=interval) {
@@ -95,12 +95,16 @@ public class WindFLODoubleSolution
             }
         }
         //System.out.println(grid.size());
+        int a=randomGenerator.nextInt(0,5);
+        //System.out.println(a);
         //System.out.println((problem.getNumberOfVariables())/2);
-        for (int i = 0 ; i < (problem.getNumberOfVariables())/2; i++) {
+        for (int i = 0 ; i < ((problem.getNumberOfVariables())/2); i++) {
 //      System.out.println(grid.get(i)[0]);
 //      System.out.println(grid.get(i)[1]);
-            setVariableValue(i*2, grid.get(i*2)[0]) ;
-            setVariableValue(i*2+1, grid.get(i*2)[1]) ;
+            setVariableValue(i*2, grid.get(i)[0] + randomGenerator.nextDouble(0, 1)) ;
+            //setVariableValue(i*2, grid.get(i+a)[0]) ;
+            setVariableValue(i*2+1, grid.get(i)[1] + randomGenerator.nextDouble(0, 1)) ;
+            //setVariableValue(i*2+1, grid.get(i+a)[1]) ;
         }
     }
 }

@@ -29,7 +29,7 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
 
     /** Constructor */
     public WindFLO() {
-        this(1000) ;
+        this(600) ;
     }
 
     /** Constructor */
@@ -77,7 +77,7 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
     @Override
     public void evaluate(DoubleSolution solution) {
         int numberOfVariables = getNumberOfVariables() ;
-        long starTime=System.currentTimeMillis();
+        //long starTime=System.currentTimeMillis();
 
         double[] f = new double[getNumberOfObjectives()];
         double[] x = new double[numberOfVariables] ;
@@ -85,7 +85,13 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
         for(int i =0;i< numberOfVariables/2;i++){
             layout[i][0]=solution.getVariableValue(i*2);
             layout[i][1]=solution.getVariableValue(i*2+1);
+//            System.out.println(layout[i][0]);
+//            System.out.println(layout[i][1]);
         }
+//        System.out.println("end");
+//        System.out.println("");
+//        System.out.println("");
+
         final double ct  = 750000;
         final double cs  = 8000000;
         final double m   = 30;
@@ -94,6 +100,7 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
         final double com = 20000;
 
         double wfr = evaluate_2014(layout);
+        //System.out.println("wfr:"+wfr);
         if (wfr<=0)
             solution.setObjective(0, Double.MAX_VALUE);
         int n = layout.length;
@@ -102,8 +109,9 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
                 ((1-Math.pow(1+r, -y))/r)/(8760.0*scenario.wakeFreeEnergy*wfr*n))+0.1/n;
 
         //	    System.out.println(n+"\t"+wfr+"\t"+fit);
+        //System.out.println("energyCost:"+energyCost);
         solution.setObjective(0, energyCost);
-        System.out.println(System.currentTimeMillis()-starTime);
+        //System.out.println(System.currentTimeMillis()-starTime);
     }
 
     private double evaluate_2014(double[][] layout) {
