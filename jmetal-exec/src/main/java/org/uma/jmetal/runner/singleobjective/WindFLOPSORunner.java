@@ -50,9 +50,12 @@ public class WindFLOPSORunner {
             evaluator = new MultithreadedSolutionListEvaluator<DoubleSolution>(numberOfCores, problem) ;
         }
 
-        algorithm = new StandardPSO2011(problem,
-                10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables())),
-                800, 3, evaluator) ;
+        int swarmSize = 10 + (int) (2 * Math.sqrt(problem.getNumberOfVariables()));
+        //System.out.println(swarmSize);
+        //for test
+        //swarmSize = 15;
+        int maxIter = Integer.parseInt(args[3]);
+        algorithm = new StandardPSO2011(problem, swarmSize,maxIter, 3, evaluator) ;
 
         AlgorithmRunner algorithmRunner = new AlgorithmRunner.Executor(algorithm)
                 .execute() ;

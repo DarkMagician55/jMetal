@@ -296,6 +296,8 @@ public class StandardPSO2011 extends AbstractParticleSwarmOptimization<DoubleSol
         bestFoundParticle = bestSolution;
       }
     }
+    //output
+    System.out.println(bestFoundParticle.getObjective(0));
   }
 
   @Override
