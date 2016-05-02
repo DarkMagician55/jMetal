@@ -1,9 +1,10 @@
-.idea
 jMetalMV.iml
 jMetal.log
 jMetal.log.ini
 jMetal.log.lck
 result
+jmetal.sublime-project
+jmetal.sublime-workspace
 # ------------------------------------------------------------------------------
 # Languages
 # ------------------------------------------------------------------------------
