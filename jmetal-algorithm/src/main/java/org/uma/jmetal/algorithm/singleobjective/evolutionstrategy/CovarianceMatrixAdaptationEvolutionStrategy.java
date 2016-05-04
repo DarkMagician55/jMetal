@@ -23,6 +23,7 @@ package org.uma.jmetal.algorithm.singleobjective.evolutionstrategy;
 import org.uma.jmetal.algorithm.impl.AbstractEvolutionStrategy;
 import org.uma.jmetal.algorithm.singleobjective.evolutionstrategy.util.CMAESUtils;
 import org.uma.jmetal.problem.DoubleProblem;
+import org.uma.jmetal.problem.singleobjective.WindFLO;
 import org.uma.jmetal.solution.DoubleSolution;
 import org.uma.jmetal.util.JMetalLogger;
 import org.uma.jmetal.util.comparator.ObjectiveComparator;
@@ -239,6 +240,29 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     // number of objective variables/problem dimension
     int numberOfVariables = getProblem().getNumberOfVariables();
 
+      WindFLO problem= (WindFLO) getProblem();
+      ArrayList<double[]> grid = new ArrayList<double[]>();
+      double interval = 10 * problem.getTurbineRadius();
+
+      //建立网格，八倍最小半径，这grid到底有什么用，可以获取最多的发电机个数
+      for (double x=0.0; x<problem.getFarmWidth(); x+=interval) {
+          for (double y=0.0; y<problem.getFarmHeight(); y+=interval) {
+              boolean valid = true;
+              //获取障碍信息，如果处在障碍中将其置为无效d
+              for (int o=0; o<problem.getObstacles().length; o++) {
+                  double[] obs = problem.getObstacles()[o];
+                  if (x>obs[0] && y>obs[1] && x<obs[2] && y<obs[3]) {
+                      valid = false;
+                  }
+              }
+              //如果有效，把这个点加入grid
+              if (valid) {
+                  double[] point = {x, y};
+                  grid.add(point);
+              }
+          }
+      }
+
     // objective variables initial point
     // TODO: Initialize the mean in a better way
 
@@ -246,9 +270,13 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       distributionMean = typicalX;
     } else {
       distributionMean = new double[numberOfVariables];
-      for (int i = 0; i < numberOfVariables; i++) {
-        distributionMean[i] = rand.nextDouble();
-      }
+        for (int i = 0 ; i < ((problem.getNumberOfVariables())/2); i++) {
+            distributionMean[i*2]= grid.get(i)[0];
+            distributionMean[i*2+1]= grid.get(i)[1];
+        }
+//      for (int i = 0; i < numberOfVariables; i++) {
+//        distributionMean[i] = rand.nextDouble();
+//      }
     }
 
     /* Strategy parameter setting: Selection */
@@ -261,6 +289,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
     double sum = 0;
     for (int i = 0; i < mu; i++) {
       weights[i] = (Math.log(mu + 1 / 2) - Math.log(i + 1));
+      //System.out.println();
       sum += weights[i];
     }
     // normalize recombination weights array
@@ -527,8 +556,11 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
       for (int j = 0; j < numberOfVariables; j++) {
         sum += b[i][j] * artmp[j];
       }
+      double old = solution.getVariableValue(i);
+      //System.out.println(i+",old:"+old+",distributionMean[i]:"+distributionMean[i]+",sigma*sum:"+sigma+"*"+"sum"+"="+sigma*sum);
 
       double value = distributionMean[i] + sigma * sum;
+        //System.out.println(value);
       if (value > ((DoubleProblem)getProblem()).getUpperBound(i)) {
         value = ((DoubleProblem)getProblem()).getUpperBound(i);
       } else if (value < ((DoubleProblem)getProblem()).getLowerBound(i)) {
@@ -546,6 +578,7 @@ public class CovarianceMatrixAdaptationEvolutionStrategy
         .getObjective(0))) {
       bestSolutionEver = getPopulation().get(0);
     }
+      System.out.println(bestSolutionEver.getObjective(0));
   }
 
   @Override public String getName() {
