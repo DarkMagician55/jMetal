@@ -166,7 +166,7 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
 
         for (int i=0; i<layout.length; i++) {
             if (layout[i][0]!=layout[i][0] || layout[i][1]!=layout[i][1] || layout[i][0]<0.0 || layout[i][1]<0.0 || layout[i][0]>getFarmWidth() || layout[i][1]>getFarmHeight()) {
-                System.out.println("Turbine "+i+"("+layout[i][0]+", "+layout[i][1]+") is invalid.");
+                //System.out.println("Turbine "+i+"("+layout[i][0]+", "+layout[i][1]+") is invalid.");
                 return false;
             }
 
@@ -176,7 +176,7 @@ public class WindFLO extends AbstractWindFLODoubleProblem {
                         layout[i][0] < scenario.obstacles[j][2] &&
                         layout[i][1] > scenario.obstacles[j][1] &&
                         layout[i][1] < scenario.obstacles[j][3]) {
-                    System.out.println("Turbine "+i+"("+layout[i][0]+", "+layout[i][1]+") is in the obstacle "+j+" ["+scenario.obstacles[j][0]+", "+scenario.obstacles[j][1]+", "+scenario.obstacles[j][2]+", "+scenario.obstacles[j][3]+"].");
+                    //System.out.println("Turbine "+i+"("+layout[i][0]+", "+layout[i][1]+") is in the obstacle "+j+" ["+scenario.obstacles[j][0]+", "+scenario.obstacles[j][1]+", "+scenario.obstacles[j][2]+", "+scenario.obstacles[j][3]+"].");
                     return false;
                 }
             }
